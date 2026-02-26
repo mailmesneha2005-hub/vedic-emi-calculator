@@ -1,0 +1,1 @@
+Traditional EMI and interest calculations rely on multiplication-heavy and power-based operations, which can be computationally expensive on low-power or embedded financial systems.
