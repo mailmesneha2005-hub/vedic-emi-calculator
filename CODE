@@ -1,0 +1,67 @@
+import java.util.Scanner;
+
+class VedicEMICalculator {
+
+    // 1️⃣ Normal EMI calculation
+    static double calculateNormalEMI(double principal, double annualRate, int years) {
+        double r = annualRate / (12 * 100);
+        int n = years * 12;
+
+        double power = Math.pow(1 + r, n);
+        return (principal * r * power) / (power - 1);
+    }
+
+    // 2️⃣ Vedic (Nikhilam-inspired) EMI calculation
+    static double calculateVedicEMI(double principal, double annualRate, int years) {
+        double r = annualRate / (12 * 100);
+        int n = years * 12;
+
+        // Vedic approximation (avoids power function)
+        double powerApprox = 1 + (n * r);
+        return (principal * r * powerApprox) / (powerApprox - 1);
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter loan amount (principal): ");
+        double principal = sc.nextDouble();
+
+        System.out.print("Enter annual interest rate (%): ");
+        double rate = sc.nextDouble();
+
+        System.out.print("Enter loan duration (years): ");
+        int years = sc.nextInt();
+
+        // ⏱ Normal EMI timing
+        long startNormal = System.nanoTime();
+        double normalEMI = calculateNormalEMI(principal, rate, years);
+        long endNormal = System.nanoTime();
+
+        // ⏱ Vedic EMI timing
+        long startVedic = System.nanoTime();
+        double vedicEMI = calculateVedicEMI(principal, rate, years);
+        long endVedic = System.nanoTime();
+
+        long normalTime = endNormal - startNormal;
+        long vedicTime = endVedic - startVedic;
+        long timeDifference = normalTime - vedicTime;
+
+        double speedImprovement =
+                ((double) timeDifference / normalTime) * 100;
+
+        // 📤 Output
+        System.out.println("\n--- EMI Results ---");
+        System.out.println("Normal EMI: " + normalEMI);
+        System.out.println("Vedic EMI:  " + vedicEMI);
+
+        System.out.println("\n--- Performance Analysis ---");
+        System.out.println("Normal Method Time (ns): " + normalTime);
+        System.out.println("Vedic Method Time (ns):  " + vedicTime);
+        System.out.println("Time Saved (ns):         " + timeDifference);
+        System.out.printf("Speed Improvement:       %.2f%%\n", speedImprovement);
+
+        sc.close();
+    }
+}
