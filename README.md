@@ -1,3 +1,5 @@
+final commit 5:03 pm 
+
 # Vedic Financial Compute Engine
 
 A Vedic-mathematics inspired EMI and interest calculator optimized for fast financial computation.
